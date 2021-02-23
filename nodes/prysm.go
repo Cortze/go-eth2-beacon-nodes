@@ -1,4 +1,4 @@
-package go-eth2-beacon-nodes
+package nodes
 
 import (
     "fmt"
