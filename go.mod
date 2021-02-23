@@ -1,4 +1,4 @@
-module github.com/Cortze/go-eth2-beacon-nodes
+module github.com/cortze/go-eth2-beacon-nodes
 
 go 1.15
 
