@@ -45,7 +45,6 @@ func NewPrysmClient(ip string, port string) *PrysmClient{
 // Get Flat BeaconState by slot number from local client
 func (c *PrysmClient)GetFlatBeaconStateFromSlot(slot int) (*beacon.BeaconState,error){
     url := "http://" + c.Ip + ":" + c.Port + PrysmBase + PrysmBSQuery + strconv.Itoa(slot)
-    fmt.Println("Url to request the BeaconState:", url)
     var bstate beacon.BeaconState
     bodybytes, err := GetJSON(url)
     if err != nil {
@@ -54,14 +53,12 @@ func (c *PrysmClient)GetFlatBeaconStateFromSlot(slot int) (*beacon.BeaconState,e
     breader := bytes.NewReader(bodybytes)
     // Deserialize the ssz_bytes into a beacon.BeaconState
     bstate.Deserialize(configs.Mainnet, codec.NewDecodingReader(breader, uint64(len(bodybytes))))
-    fmt.Println("DEBUG, Successfully requested the FlatBeaconState,", slot, "\n")
     return &bstate, nil
 }
 
 // Get BeaconStateView by slot number from local client
 func (c *PrysmClient)GetBeaconStateViewFromSlot(slot int) (*beacon.BeaconStateView, error) {
     url := "http://" + c.Ip + ":" + c.Port + PrysmBase + PrysmBSQuery + strconv.Itoa(slot)
-    fmt.Println("Url to request the BeaconState:", url)
     var bstate *beacon.BeaconStateView
     bodybytes, err := GetJSON(url)
     if err != nil {
@@ -70,6 +67,5 @@ func (c *PrysmClient)GetBeaconStateViewFromSlot(slot int) (*beacon.BeaconStateVi
     breader := bytes.NewReader(bodybytes)
     // Deserialize the ssz_bytes into a beacon.BeaconState
     bstate, err = beacon.AsBeaconStateView(c.Spec.BeaconState().Deserialize(codec.NewDecodingReader(breader, uint64(len(bodybytes)))))
-    fmt.Println("DEBUG, Successfully requested the BeaconStateView,", slot, "\n")
     return bstate, nil
 }

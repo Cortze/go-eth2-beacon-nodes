@@ -26,7 +26,6 @@ func GetJSON(url string) ([]byte, error) {
         return sszResp.Encoded, fmt.Errorf("unexpected http GET status: %s", resp.Status)
     }
     bodybytes, err := ioutil.ReadAll(resp.Body)
-    fmt.Println("bodybytes:", bodybytes)
     if err != nil {
         return sszResp.Encoded, fmt.Errorf("ERROR reading response:", err)
     }
@@ -34,7 +33,6 @@ func GetJSON(url string) ([]byte, error) {
     if err != nil {
         return sszResp.Encoded, fmt.Errorf("ERROR Unmarshalling reply from prysm:", err)
     }
-    fmt.Println("SSZ Encoded:", sszResp.Encoded)
     return sszResp.Encoded, nil
 }
 
