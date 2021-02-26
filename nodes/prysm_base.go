@@ -24,9 +24,9 @@ type PrysmClient struct {
 }
 
 // Generate a New Prysm Client
-func NewPrysmClient(ip string, port string) *PrysmClient{
+func NewPrysmClient(ip string, port string) PrysmClient{
     fmt.Println("DEBUG, generating new Prysm Client")
-    pClient := &PrysmClient{
+    pClient := PrysmClient{
             Ip: ip,
             Port: port,
             HeadSlot: 0,

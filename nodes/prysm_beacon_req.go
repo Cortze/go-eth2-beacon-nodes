@@ -16,7 +16,7 @@ import (
 
 // NOTE: Same fucntion, diferent, ones gives back the View of the state, the other one the State
 // Get Flat BeaconState by slot number from local client
-func (c *PrysmClient)GetFlatBeaconStateFromSlot(slot int) (*beacon.BeaconState,error){
+func (c *PrysmClient) GetFlatBeaconStateFromSlot(slot int) (*beacon.BeaconState,error){
     url := "http://" + c.Ip + ":" + c.Port + PrysmBase + PrysmBSQuery + strconv.Itoa(slot)
     var bstate beacon.BeaconState
     bodybytes, err := GetJSON(url)
@@ -30,7 +30,7 @@ func (c *PrysmClient)GetFlatBeaconStateFromSlot(slot int) (*beacon.BeaconState,e
 }
 
 // Get BeaconStateView by slot number from local client
-func (c *PrysmClient)GetBeaconStateViewFromSlot(slot int) (*beacon.BeaconStateView, error) {
+func (c *PrysmClient) GetBeaconStateViewFromSlot(slot int) (*beacon.BeaconStateView, error) {
     url := "http://" + c.Ip + ":" + c.Port + PrysmBase + PrysmBSQuery + strconv.Itoa(slot)
     var bstate *beacon.BeaconStateView
     bodybytes, err := GetJSON(url)
@@ -58,7 +58,7 @@ type PSignedBlock struct {
 }
 
 // returns the Prysm version of the SignedBeaconBlock
-func (c *PrysmClient)GetBeaconBlockFromSlot(slot int) (PSignedBlock, error){
+func (c *PrysmClient) GetBeaconBlockFromSlot(slot int) (PSignedBlock, error){
     url := "http://" + c.Ip + ":" + c.Port + PrysmBase + PrysmBBclockQuery + "slot=" + strconv.Itoa(slot)
     var blocksResponse PrysmBeaconBlockContainer
     var psb PSignedBlock
