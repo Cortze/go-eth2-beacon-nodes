@@ -47,7 +47,7 @@ func GetJSON(url string) ([]byte, error) {
     if resp.StatusCode != http.StatusOK {
         return bodybytes, fmt.Errorf("unexpected http GET status: %s", resp.Status)
     }
-    bodybytes, err := ioutil.ReadAll(resp.Body)
+    bodybytes, err = ioutil.ReadAll(resp.Body)
     if err != nil {
         return bodybytes, fmt.Errorf("ERROR reading response:", err)
     }
