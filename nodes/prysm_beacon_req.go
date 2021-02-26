@@ -4,7 +4,7 @@ import (
     "fmt"
     "bytes"
     "strconv"
-    "encondig/json"
+    "enconding/json"
     "github.com/protolambda/ztyp/codec"
     "github.com/protolambda/zrnt/eth2/beacon"
 )
