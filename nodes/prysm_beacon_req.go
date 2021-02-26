@@ -47,10 +47,14 @@ func (c *PrysmClient) GetBeaconStateViewFromSlot(slot int) (*beacon.BeaconStateV
 // -- Beacon Block --
 // response type from Prysm for the BeaconBlocks
 type PrysmBeaconBlockContainer struct {
-    BlockContainers []PSignedBlock  `json:"blockContainers"`
-    NextPageToken   string          `json:"nextPageToken"`
-    TotalBlocks     int             `json:"totalSize"`
+    BlockContainers []BlockContainer `json:"blockContainers"`
+    NextPageToken   string           `json:"nextPageToken"`
+    TotalBlocks     int              `json:"totalSize"`
 }
+type BlockContainer struct {
+    Block   PSignedBlock    `json:"block"`
+}
+
 type PSignedBlock struct {
     BeaconBlock beacon.BeaconBlock  `json:"block"`
     Signature   beacon.BLSSignature `json:"signature"`
@@ -74,8 +78,8 @@ func (c *PrysmClient) GetBeaconBlockFromSlot(slot int) (PSignedBlock, error){
         return psb, fmt.Errorf("Error Unmarshalling the JSON from the API resposne -> block from slot", err)
     }
     fmt.Println("the BlockResponse", blocksResponse)
-    psb = blocksResponse.BlockContainers.Block[0]
-    return blocksResponse.BlockContainers.Block[0], nil
+    psb = blocksResponse.BlockContainers[0].Block
+    return blocksResponse.BlockContainers[0].Block, nil
 }
 
 // return List of blocks of the given epoch
