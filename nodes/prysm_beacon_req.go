@@ -20,7 +20,7 @@ import (
 func (c *PrysmClient) GetFlatBeaconStateFromSlot(slot int) (*beacon.BeaconState,error){
     url := "http://" + c.Ip + ":" + c.Port + PrysmBase + PrysmBSQuery + strconv.Itoa(slot)
     var bstate beacon.BeaconState
-    bodybytes, err := GetJSON(url)
+    bodybytes, err := GetSSZEncodedJSON(url)
     if err != nil {
         return &bstate, fmt.Errorf("ERROR reading response:", err)
     }
@@ -34,7 +34,7 @@ func (c *PrysmClient) GetFlatBeaconStateFromSlot(slot int) (*beacon.BeaconState,
 func (c *PrysmClient) GetBeaconStateViewFromSlot(slot int) (*beacon.BeaconStateView, error) {
     url := "http://" + c.Ip + ":" + c.Port + PrysmBase + PrysmBSQuery + strconv.Itoa(slot)
     var bstate *beacon.BeaconStateView
-    bodybytes, err := GetJSON(url)
+    bodybytes, err := GetSSZEncodedJSON(url)
     if err != nil {
         return bstate, fmt.Errorf("ERROR reading response:", err)
     }
@@ -61,6 +61,7 @@ type PSignedBlock struct {
 // returns the Prysm version of the SignedBeaconBlock
 func (c *PrysmClient) GetBeaconBlockFromSlot(slot int) (PSignedBlock, error){
     url := "http://" + c.Ip + ":" + c.Port + PrysmBase + PrysmBBlockQuery + "slot=" + strconv.Itoa(slot)
+    fmt.Println("Url:", url)
     var blocksResponse PrysmBeaconBlockContainer
     var psb PSignedBlock
     bodybytes, err := GetJSON(url)
@@ -78,6 +79,7 @@ func (c *PrysmClient) GetBeaconBlockFromSlot(slot int) (PSignedBlock, error){
 // return List of blocks of the given epoch
 func (c *PrysmClient) GetBeaconBlocksFromEpoch(epoch int) (PrysmBeaconBlockContainer, error){
     url := "http://" + c.Ip + ":" + c.Port + PrysmBase + PrysmBBlockQuery + "epoch=" + strconv.Itoa(epoch)
+    fmt.Println("Url:", url)
     var pbbc PrysmBeaconBlockContainer
     bodybytes, err := GetJSON(url)
     fmt.Println("Bodybytes:", bodybytes)

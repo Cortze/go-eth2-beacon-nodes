@@ -14,7 +14,7 @@ type Resp struct {
 // getJSON fetches the contents of the given URL
 // and decodes it as JSON into the given result,
 // which should be a pointer to the expected data.
-func GetJSON(url string) ([]byte, error) {
+func GetSSZEncodedJSON(url string) ([]byte, error) {
     resp, err := http.Get(url)
     var sszResp Resp
     if err != nil {
@@ -36,3 +36,19 @@ func GetJSON(url string) ([]byte, error) {
     return sszResp.Encoded, nil
 }
 
+
+func GetJSON(url string) ([]byte, error) {
+    resp, err := http.Get(url)
+    if err != nil {
+        return resp.Body, fmt.Errorf("cannot fetch URL %q: %v", url, err)
+    }
+    defer resp.Body.Close()
+    if resp.StatusCode != http.StatusOK {
+        return resp.Body, fmt.Errorf("unexpected http GET status: %s", resp.Status)
+    }
+    bodybytes, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+        return resp.Body, fmt.Errorf("ERROR reading response:", err)
+    }
+    return bodybytes, nil
+}
