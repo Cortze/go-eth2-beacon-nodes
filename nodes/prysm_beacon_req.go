@@ -7,6 +7,7 @@ import (
     "encoding/json"
     "github.com/protolambda/ztyp/codec"
     "github.com/protolambda/zrnt/eth2/beacon"
+    "github.com/protolambda/zrnt/eth2/configs"
 )
 
 // ---------- BEACON REQUESTS -----------
@@ -59,31 +60,31 @@ type PSignedBlock struct {
 
 // returns the Prysm version of the SignedBeaconBlock
 func (c *PrysmClient) GetBeaconBlockFromSlot(slot int) (PSignedBlock, error){
-    url := "http://" + c.Ip + ":" + c.Port + PrysmBase + PrysmBBclockQuery + "slot=" + strconv.Itoa(slot)
+    url := "http://" + c.Ip + ":" + c.Port + PrysmBase + PrysmBBlockQuery + "slot=" + strconv.Itoa(slot)
     var blocksResponse PrysmBeaconBlockContainer
     var psb PSignedBlock
     bodybytes, err := GetJSON(url)
     if err != nil {
-        return psb, fmt.Printf("Error Getting the JSON from the API -> block from slot", err)
+        return psb, fmt.Errorf("Error Getting the JSON from the API -> block from slot", err)
     }
     err = json.Unmarshal(bodybytes, &blocksResponse)
     if err != nil {
-        return psb, fmt.Println("Error Unmarshalling the JSON from the API resposne -> block from slot")
+        return psb, fmt.Errorf("Error Unmarshalling the JSON from the API resposne -> block from slot")
     }
     return blocksResponse.BlockContainers[0], nil
 }
 
 // return List of blocks of the given epoch
 func (c *PrysmClient) GetBeaconBlocksFromEpoch(spoch int) (PrysmBeaconBlockContainer, error){
-    url := "http://" + c.Ip + ":" + c.Port + PrysmBase + PrysmBBclockQuery + "epoch=" + strconv.Itoa(epoch)
+    url := "http://" + c.Ip + ":" + c.Port + PrysmBase + PrysmBBlockQuery + "epoch=" + strconv.Itoa(epoch)
     var pbbc PrysmBeaconBlockContainer
     bodybytes, err := GetJSON(url)
     if err != nil {
-        return pbbc, fmt.Println("Error Getting the Json From the API -> Blocks from epoch")
+        return pbbc, fmt.Errorf("Error Getting the Json From the API -> Blocks from epoch")
     }
     err = json.Unmarshal(budybytes, &pbbc)
     if err != nil {
-        return pbbc, fmt.Println("Error Unmarshalling the JSON from the API resposne -> block from slot")
+        return pbbc, fmt.Errorf("Error Unmarshalling the JSON from the API resposne -> block from epoch")
     }
     return pbbc, nil
 }

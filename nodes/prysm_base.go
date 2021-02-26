@@ -2,9 +2,6 @@ package nodes
 
 import (
     "fmt"
-    "bytes"
-    "strconv"
-    "github.com/protolambda/ztyp/codec"
     "github.com/protolambda/zrnt/eth2/beacon"
     "github.com/protolambda/zrnt/eth2/configs"
 )
