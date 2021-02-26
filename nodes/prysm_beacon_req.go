@@ -75,14 +75,14 @@ func (c *PrysmClient) GetBeaconBlockFromSlot(slot int) (PSignedBlock, error){
 }
 
 // return List of blocks of the given epoch
-func (c *PrysmClient) GetBeaconBlocksFromEpoch(spoch int) (PrysmBeaconBlockContainer, error){
+func (c *PrysmClient) GetBeaconBlocksFromEpoch(epoch int) (PrysmBeaconBlockContainer, error){
     url := "http://" + c.Ip + ":" + c.Port + PrysmBase + PrysmBBlockQuery + "epoch=" + strconv.Itoa(epoch)
     var pbbc PrysmBeaconBlockContainer
     bodybytes, err := GetJSON(url)
     if err != nil {
         return pbbc, fmt.Errorf("Error Getting the Json From the API -> Blocks from epoch")
     }
-    err = json.Unmarshal(budybytes, &pbbc)
+    err = json.Unmarshal(bodybytes, &pbbc)
     if err != nil {
         return pbbc, fmt.Errorf("Error Unmarshalling the JSON from the API resposne -> block from epoch")
     }
