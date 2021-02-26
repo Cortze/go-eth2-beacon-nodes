@@ -47,12 +47,9 @@ func (c *PrysmClient) GetBeaconStateViewFromSlot(slot int) (*beacon.BeaconStateV
 // -- Beacon Block --
 // response type from Prysm for the BeaconBlocks
 type PrysmBeaconBlockContainer struct {
-    BlockContainers BlockContainer  `json:"blockContainers"`
+    BlockContainers []PSignedBlock  `json:"blockContainers"`
     NextPageToken   string          `json:"nextPageToken"`
     TotalBlocks     int             `json:"totalSize"`
-}
-type BlockContainer struct {
-    Block   []PSignedBlock  `json:"block"`
 }
 type PSignedBlock struct {
     BeaconBlock beacon.BeaconBlock  `json:"block"`
