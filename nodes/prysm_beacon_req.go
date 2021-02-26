@@ -64,12 +64,13 @@ func (c *PrysmClient) GetBeaconBlockFromSlot(slot int) (PSignedBlock, error){
     var blocksResponse PrysmBeaconBlockContainer
     var psb PSignedBlock
     bodybytes, err := GetJSON(url)
+    fmt.Println("Bodybytes:", bodybytes)
     if err != nil {
         return psb, fmt.Errorf("Error Getting the JSON from the API -> block from slot", err)
     }
     err = json.Unmarshal(bodybytes, &blocksResponse)
     if err != nil {
-        return psb, fmt.Errorf("Error Unmarshalling the JSON from the API resposne -> block from slot")
+        return psb, fmt.Errorf("Error Unmarshalling the JSON from the API resposne -> block from slot", err)
     }
     return blocksResponse.BlockContainers[0], nil
 }
@@ -79,12 +80,13 @@ func (c *PrysmClient) GetBeaconBlocksFromEpoch(epoch int) (PrysmBeaconBlockConta
     url := "http://" + c.Ip + ":" + c.Port + PrysmBase + PrysmBBlockQuery + "epoch=" + strconv.Itoa(epoch)
     var pbbc PrysmBeaconBlockContainer
     bodybytes, err := GetJSON(url)
+    fmt.Println("Bodybytes:", bodybytes)
     if err != nil {
         return pbbc, fmt.Errorf("Error Getting the Json From the API -> Blocks from epoch")
     }
     err = json.Unmarshal(bodybytes, &pbbc)
     if err != nil {
-        return pbbc, fmt.Errorf("Error Unmarshalling the JSON from the API resposne -> block from epoch")
+        return pbbc, fmt.Errorf("Error Unmarshalling the JSON from the API resposne -> block from epoch", err)
     }
     return pbbc, nil
 }
