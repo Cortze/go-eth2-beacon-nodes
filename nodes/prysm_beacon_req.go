@@ -73,7 +73,7 @@ func (c *PrysmClient) GetBeaconBlockFromSlot(slot int) (PSignedBlock, error){
     if err != nil {
         return psb, fmt.Errorf("Error Unmarshalling the JSON from the API resposne -> block from slot", err)
     }
-    fmt.Println("the BlockResponse", blockResponse)
+    fmt.Println("the BlockResponse", blocksResponse)
     psb = blocksResponse.BlockContainers[0]
     return blocksResponse.BlockContainers[0], nil
 }
