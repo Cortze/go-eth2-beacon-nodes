@@ -38,17 +38,18 @@ func GetSSZEncodedJSON(url string) ([]byte, error) {
 
 
 func GetJSON(url string) ([]byte, error) {
+    var bodybytes []byte
     resp, err := http.Get(url)
     if err != nil {
-        return resp.Body, fmt.Errorf("cannot fetch URL %q: %v", url, err)
+        return bodybytes, fmt.Errorf("cannot fetch URL %q: %v", url, err)
     }
     defer resp.Body.Close()
     if resp.StatusCode != http.StatusOK {
-        return resp.Body, fmt.Errorf("unexpected http GET status: %s", resp.Status)
+        return bodybytes, fmt.Errorf("unexpected http GET status: %s", resp.Status)
     }
     bodybytes, err := ioutil.ReadAll(resp.Body)
     if err != nil {
-        return resp.Body, fmt.Errorf("ERROR reading response:", err)
+        return bodybytes, fmt.Errorf("ERROR reading response:", err)
     }
     return bodybytes, nil
 }
